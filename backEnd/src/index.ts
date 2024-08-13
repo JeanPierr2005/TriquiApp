@@ -10,5 +10,5 @@ server.listen(3000, () => {
   console.log("Server esta en el puerto 3000");
 });
 io.on("connection", (socket) => {
-  console.log("Nueva Conexion", socket);
+  console.log("Nueva Conexion");
 });

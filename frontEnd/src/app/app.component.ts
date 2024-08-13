@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BotonsComponent } from './components/botons/botons.component';
+import { ServerService } from './services/server.service';
 
 @Component({
   selector: 'app-root',
@@ -11,4 +12,6 @@ import { BotonsComponent } from './components/botons/botons.component';
 })
 export class AppComponent {
   title = 'Triqui';
+
+  serverService = inject(ServerService)
 }
