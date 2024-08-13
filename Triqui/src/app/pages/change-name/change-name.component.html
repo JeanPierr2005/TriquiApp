@@ -1,0 +1,14 @@
+<form (ngSubmit)="changeNameAndBack(name.value)" #form="ngForm">
+  <label for="name">Write your name</label>
+  <input
+    type="text"
+    id="name"
+    name="name"
+    #name
+    required
+    maxlength="20"
+    ngModel
+  />
+  <button [disabled]="form.invalid">Change Name</button>
+</form>
+<a [routerLink]="['/']">Back</a>

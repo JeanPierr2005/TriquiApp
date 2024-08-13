@@ -1,0 +1,21 @@
+@use "./../../public/colors.scss";
+
+$border-radius-base: 20px;
+$padding-console: 16px;
+
+#container{
+    background-color: colors.$accent-1;
+    max-width: 500px;
+    border-radius: 40px;
+    padding: calc($border-radius-base  + $padding-console);
+}
+#screen{
+    height: 500px;
+    background-color: colors.$background;
+    border-radius: $border-radius-base;
+    outline: 16px solid colors.$primary;
+}
+p{
+    margin-top: 26px;
+    font-weight: bold;
+}
