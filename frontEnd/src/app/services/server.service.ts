@@ -11,6 +11,8 @@ export class ServerService {
     this.server.on('connect', () => {
       console.log('Conectado al back');
     });
+    this.server.onAny(event => console.log("Onany", event));
     this.server.connect();
+    this.server.emit("Mensaje random")
   }
 }

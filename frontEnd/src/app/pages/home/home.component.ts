@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ServerService } from '../../services/server.service';
 
 @Component({
   selector: 'app-home',
@@ -11,4 +12,6 @@ import { UserService } from '../../services/user.service';
 })
 export class HomeComponent {
   userService = inject(UserService);
+  serverService = inject(ServerService) 
+
 }
