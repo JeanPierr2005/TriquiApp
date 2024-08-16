@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ServerService } from '../../services/server.service';
 
@@ -12,6 +12,15 @@ import { ServerService } from '../../services/server.service';
 })
 export class HomeComponent {
   userService = inject(UserService);
-  serverService = inject(ServerService) 
+  serverService = inject(ServerService);
+  router = inject(Router);
 
+  /** Pregunta si tenemos una sala disponible */
+  searchPublicRoom() {
+    this.serverService.server.emitWithAck('findRoom').then((res) => {
+      console.log(res);
+      if (res === null) return this.router.navigate(['/play']);
+      return this.router.navigate(['/play', res])
+    });
+  }
 }

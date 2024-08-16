@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ServerService } from '../../services/server.service';
+import { createRoomArgs } from '../../interfaces/createRoom';
 
 @Component({
   selector: 'app-play',
@@ -9,5 +11,17 @@ import { RouterModule } from '@angular/router';
   styleUrl: './play.component.scss'
 })
 export class PlayComponent {
+
+  serverService = inject(ServerService)
+
+  constructor() {
+    const args:createRoomArgs = {
+      publica: true,
+      playerName: "Text"
+    }
+    this.serverService.server.emitWithAck("createRoom", args).then(res => {
+
+    })
+  }
 
 }
