@@ -42,6 +42,11 @@ io.on("connection", (socket) => {
             rooms
         );
     });
+    socket.on("play", (args) => {
+        console.log("Mirando el registro de una jugada",args, searchRoom(args.roomId));
+        
+        searchRoom(args.roomId)?.play(args.player, args.position);
+    });
 });
 
 /**Busca una sala disponible, si la encuentra devuelve el id y si no encuenta devuelve null */
@@ -90,4 +95,8 @@ function joinARoom(socket: Socket, callback: Function, args: joinARoomArgs) {
         message: "Unido a la sala " + rooms[roomIndex].id,
         room: rooms[roomIndex].getRoom(),
     });
+}
+
+function searchRoom(id: number) {
+    return rooms.find((room) => room.id === id);
 }
