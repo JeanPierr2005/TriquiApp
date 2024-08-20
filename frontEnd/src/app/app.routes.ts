@@ -16,6 +16,17 @@ export const routes: Routes = [
     canActivate: [needNameGuard],
   },
   {
+    path: 'play/:id',
+    component: PlayComponent,
+    canActivate: [needNameGuard],
+  },
+  {
+    path: 'private-play',
+    component: PlayComponent,
+    canActivate: [needNameGuard],
+    data:{isPrivated: true}
+  },
+  {
     path: 'change-name',
     component: ChangeNameComponent,
   },
