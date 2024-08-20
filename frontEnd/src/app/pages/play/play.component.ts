@@ -11,22 +11,20 @@ import { UserService } from '../../services/user.service';
   templateUrl: './play.component.html',
   styleUrl: './play.component.scss',
 })
-export class PlayComponent implements OnInit{
+export class PlayComponent implements OnInit {
   serverService = inject(ServerService);
   userServcie = inject(UserService);
   isPrivated = input();
+  id = input<string>();
 
-  constructor() {
-    const args: createRoomArgs = {
-      publica: true,
-      playerName: this.userServcie.name(),
-    };
-    this.serverService.server.emitWithAck('createRoom', args).then((res) => {
-      console.log('Crear sala', res);
-    });
-  }
   ngOnInit(): void {
-    console.log(this.isPrivated());
-    
+    if (!this.isPrivated() && !this.id()) {
+      this.serverService.createRoom();
+    } else if (this.id()) {
+      console.log("Intentando unirse a la sala", this.id());
+      this.serverService.joinARoom(parseInt(this.id()!));
+    } else {
+      this.serverService.createRoom(true);
+    }
   }
 }

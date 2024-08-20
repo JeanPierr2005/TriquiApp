@@ -3,7 +3,7 @@ export interface createRoomArgs {
   playerName: string;
 }
 
-export interface joinRoomArgs {
+export interface joinARoomArgs {
   id: number;
   playerName: string;
 }
