@@ -1,8 +1,9 @@
 export interface createRoomArgs {
-    publica: boolean,
-    playerName: string
+  publica: boolean;
+  playerName: string;
 }
 
-export interface joinRoomArgs{
-    id: number,
+export interface joinRoomArgs {
+  id: number;
+  playerName: string;
 }
