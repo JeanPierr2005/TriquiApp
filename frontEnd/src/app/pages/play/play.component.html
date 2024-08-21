@@ -1,0 +1,8 @@
+<app-party-details />
+<app-board />
+
+@if (roomService.state() === "SHIFT_P1" || roomService.state() === "SHIFT_P2" ||
+roomService.state() === "DRAW" || roomService.state() === "FINAL_VICTRY_P1" ||
+roomService.state() === "FINAL_VICTRY_P2") {
+<button (click)="newRound()">Next Round</button>
+}

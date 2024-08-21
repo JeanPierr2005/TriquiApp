@@ -1,0 +1,15 @@
+<div>
+  <button (click)="play(0)"[disabled]="!isMyShift()">{{roomService.board()[0]}}</button>
+  <button (click)="play(1)"[disabled]="!isMyShift()">{{roomService.board()[1]}}</button>
+  <button (click)="play(2)"[disabled]="!isMyShift()">{{roomService.board()[2]}}</button>
+</div>
+<div>
+  <button (click)="play(3)"[disabled]="!isMyShift()">{{roomService.board()[3]}}</button>
+  <button (click)="play(4)"[disabled]="!isMyShift()">{{roomService.board()[4]}}</button>
+  <button (click)="play(5)"[disabled]="!isMyShift()">{{roomService.board()[5]}}</button>
+</div>
+<div>
+  <button (click)="play(6)"[disabled]="!isMyShift()">{{roomService.board()[6]}}</button>
+  <button (click)="play(7)"[disabled]="!isMyShift()">{{roomService.board()[7]}}</button>
+  <button (click)="play(8)"[disabled]="!isMyShift()">{{roomService.board()[8]}}</button>
+</div>
