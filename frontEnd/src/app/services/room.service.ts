@@ -79,4 +79,9 @@ export class RoomService {
       position,
     });
   }
+
+  /**Envia al server la peticion de seir jugando la siguiente ronda */
+  newRound() {
+    this.serverService.server.emit('newRound', {roomId:this.id()});
+  }
 }

@@ -43,9 +43,21 @@ io.on("connection", (socket) => {
         );
     });
     socket.on("play", (args) => {
-        console.log("Mirando el registro de una jugada",args, searchRoom(args.roomId));
-        
+        console.log(
+            "Mirando el registro de una jugada",
+            args,
+            searchRoom(args.roomId)
+        );
         searchRoom(args.roomId)?.play(args.player, args.position);
+    });
+
+    socket.on("newRound", (args) => {
+        console.log(
+            "Mirando para empezar una nueva ronda",
+            args,
+            searchRoom(args.roomId)
+        );
+        searchRoom(args.roomId)?.newRound();
     });
 });
 

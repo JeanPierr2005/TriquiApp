@@ -4,7 +4,7 @@ export type StateGame =
     | "WAITING_PARTNER"
     | "SHIFT_P1"
     | "SHIFT_P2"
-    | "WINNER_P2"
+    | "WINNER_P1"
     | "WINNER_P2"
     | "DRAW"
     | "ABANDONED"
