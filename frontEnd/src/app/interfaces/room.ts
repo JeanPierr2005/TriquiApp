@@ -4,7 +4,7 @@ export type StateGame =
   | 'WAITING_PARTNER'
   | 'SHIFT_P1'
   | 'SHIFT_P2'
-  | 'WINNER_P2'
+  | 'WINNER_P1'
   | 'WINNER_P2'
   | 'DRAW'
   | 'ABANDONED'
@@ -16,7 +16,8 @@ export interface RoomBackend {
   player: [Player, Player];
   id: number;
   state: StateGame;
-  board: Board
+  board: Board;
+  positionWinner: PositionWinner | undefined;
 }
 
 export type POSITION_BOARD = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
@@ -32,3 +33,4 @@ export type Board = [
   PlayerNumber | ''
 ];
 export type PlayerNumber = 1 | 2;
+export type PositionWinner = [POSITION_BOARD, POSITION_BOARD];

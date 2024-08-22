@@ -1,11 +1,12 @@
 import { Component, computed, inject } from '@angular/core';
 import { RoomService } from '../../services/room.service';
-import { POSITION_BOARD } from '../../interfaces/room';
+import { PlayerNumber, POSITION_BOARD } from '../../interfaces/room';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './board.component.html',
   styleUrl: './board.component.scss',
 })
@@ -19,8 +20,14 @@ export class BoardComponent {
         this.roomService.playerNumber() === 2)
   );
 
-  play(position:POSITION_BOARD) {
-    this.roomService.play(position)
+  play(position: POSITION_BOARD) {
+    this.roomService.play(position);
     //Enviar al back las solicitud del juego
+  }
+
+  getBrand(player: '' | PlayerNumber) {
+    if (!player) return '';
+    if (player === 1) return 'X';
+    return 'O';
   }
 }

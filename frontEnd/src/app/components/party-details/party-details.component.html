@@ -1,5 +1,37 @@
-<p>Player 1 {{ roomService.player1().name }}</p>
-@for(live of livesP1(); track $index){ ❤️ }
-<p>Player 2 {{ roomService.player2().name }}</p>
-@for(live of livesP2(); track $index){ ❤️ }
-<p>State game {{ roomService.state() }}</p>
+<section class="flex-apart">
+  <div class="container-player">
+    <span class="container-heart">
+      @for(live of livesP1(); track $index){❤️}
+    </span>
+    <span
+      class="player-mark"
+      [ngClass]="{ activo: roomService.state() === 'SHIFT_P1' }"
+      >X</span
+    >
+    <p class="italic">{{ roomService.player1().name }}</p>
+  </div>
+  <div class="container-player">
+    <span
+      class="player-mark"
+      [ngClass]="{ activo: roomService.state() === 'SHIFT_P2' }"
+      >O</span
+    >
+    @if (!roomService.player2().name) {<span>❤️❤️❤️</span>} @else {
+
+    <span class="container-heart">
+      @for(live of livesP2(); track $index){❤️}
+    </span>
+    }
+    <p class="italic">{{ roomService.player2().name || "..." }}</p>
+  </div>
+</section>
+@if (roomService.state() === 'SHIFT_P1' || roomService.state() === 'SHIFT_P2')
+{}
+<p class="shift">
+  Turno de
+  {{
+    roomService.state() === "SHIFT_P1"
+      ? roomService.player1().name
+      : roomService.player2().name
+  }}
+</p>

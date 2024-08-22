@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import {
   Board,
   POSITION_BOARD,
+  PositionWinner,
   RoomBackend,
   StateGame,
 } from '../interfaces/room';
@@ -10,6 +11,7 @@ import { ServerService } from './server.service';
 import { createRoomArgs } from '../interfaces/createRoom';
 import { joinARoomArgs } from '../interfaces/joinARoom';
 import { UserService } from './user.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,7 @@ import { UserService } from './user.service';
 export class RoomService {
   serverService = inject(ServerService);
   userService = inject(UserService);
+  router = inject(Router);
 
   constructor() {
     this.serverService.updateRoom$.subscribe((room) => {
@@ -36,14 +39,19 @@ export class RoomService {
   playerNumber = signal<1 | 2 | undefined>(undefined);
   id = signal<number | undefined>(undefined);
   board = signal<Board>(['', '', '', '', '', '', '', '', '']);
+  publica = signal<boolean | undefined>(undefined);
+  positionWinner = signal<PositionWinner | undefined>(undefined);
 
   deconstructRoom(roomBack: RoomBackend) {
     console.log('Desestructurando', roomBack);
+    if (!roomBack) this.router.navigate(['/']);
     this.id.set(roomBack.id);
     this.state.set(roomBack.state);
     this.player1.set(roomBack.player[0]);
     this.player2.set(roomBack.player[1]);
     this.board.set(roomBack.board);
+    this.publica.set(roomBack.publica);
+    this.positionWinner.set(roomBack.positionWinner);
   }
   /**Crea una sala de juegos, publica o privada */
   createRoom(isPrivated: boolean = false) {
@@ -82,6 +90,6 @@ export class RoomService {
 
   /**Envia al server la peticion de seir jugando la siguiente ronda */
   newRound() {
-    this.serverService.server.emit('newRound', {roomId:this.id()});
+    this.serverService.server.emit('newRound', { roomId: this.id() });
   }
 }

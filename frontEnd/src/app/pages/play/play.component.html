@@ -1,8 +1,40 @@
-<app-party-details />
-<app-board />
+<div id="container">
+  <app-party-details />
+  <app-board />
+</div>
+<app-modal-fullscreen [show]="this.showModal()">
+  @switch (stateAfter()) {@case ("WAITING_PARTNER") {
+  <h2 primary>Esperando compañero</h2>
+  } @case ("WINNER_P1") {
+  <h2 primary>Ganó {{ roomService.player1().name }}</h2>
+  } @case ("WINNER_P2") {
+  <h2 primary>Ganó {{ roomService.player2().name }}</h2>
+  } @case ("FINAL_VICTRY_P1") {
+  <h2 primary>Ganó {{ roomService.player1().name }} todas las rondas</h2>
+  } @case ("FINAL_VICTRY_P2") {
+  <h2 primary>Ganó {{ roomService.player2().name }} todas las rondas</h2>
+  } } @switch (stateAfter()) { @case ("WAITING_PARTNER") {
+  <img secundary src="#" />
+  } @case ("WINNER_P1") {
+  <button secundary (click)="newRound()" class="boton">Proxima ronda</button>
+  } @case ("WINNER_P2") {
+  <button secundary (click)="newRound()" class="boton">Proxima ronda</button>
+  } @case ("FINAL_VICTRY_P1") {
+  <button secundary (click)="newRound()" class="boton">Nueva ronda</button>
+  } @case ("FINAL_VICTRY_P2") {
+  <button secundary (click)="newRound()" class="boton">Nueva ronda</button>
+  } } @if (!roomService.publica() && this.stateAfter() === "WAITING_PARTNER") {
+  <div foot id="foot">
+    <p>
+      Copia el link para invitar a un amigo
 
-@if (roomService.state() === "SHIFT_P1" || roomService.state() === "SHIFT_P2" ||
-roomService.state() === "DRAW" || roomService.state() === "FINAL_VICTRY_P1" ||
-roomService.state() === "FINAL_VICTRY_P2") {
-<button (click)="newRound()">Next Round</button>
-}
+      <button id="boton-copy">
+        <img (click)="copyLink()" src="#" alt="Copiar link" />
+      </button>
+      @if (linkCopy()) {
+      <span></span>
+      }
+    </p>
+  </div>
+  }
+</app-modal-fullscreen>

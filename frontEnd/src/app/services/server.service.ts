@@ -20,6 +20,6 @@ export class ServerService {
     this.server.on('room', (args) => {
       this.updateRoom$.next(args)
     })
-    this.server.connect();
+    this.server.connect();  
   }
 }
