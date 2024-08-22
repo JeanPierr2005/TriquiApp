@@ -66,7 +66,7 @@ function searchPublicRoom(callback: Function) {
     console.log("Buscando una sala publica");
     const disableRoom = rooms.find((room) => {
         if (!room.publica) return false;
-        if (room.player[0].name && room.player[1].name) return false;
+        if (room.players[0].name && room.players[1].name) return false;
         return true;
     });
     callback(disableRoom ? disableRoom.id : null);
@@ -95,7 +95,7 @@ function joinARoom(socket: Socket, callback: Function, args: joinARoomArgs) {
             exito: false,
             message: "No existe sala con ID " + args.id,
         });
-    if (rooms[roomIndex].player[0].name && rooms[roomIndex].player[1].name)
+    if (rooms[roomIndex].players[0].name && rooms[roomIndex].players[1].name)
         return callback({
             exito: false,
             message: "La sala esta ocupada",
@@ -105,7 +105,7 @@ function joinARoom(socket: Socket, callback: Function, args: joinARoomArgs) {
     return callback({
         exito: true,
         message: "Unido a la sala " + rooms[roomIndex].id,
-        room: rooms[roomIndex].getRoom(),
+        room: rooms[roomIndex].getRoom()
     });
 }
 

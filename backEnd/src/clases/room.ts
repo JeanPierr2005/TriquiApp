@@ -4,17 +4,19 @@ import { Player, PLAYER_VOID } from "../interfaces/player";
 import {
     Board,
     POSITION_BOARD,
+    PositionWinner,
     RoomBackend,
     StateGame,
 } from "../interfaces/room";
 
 export class Room {
     publica: boolean;
-    player: [Player, Player] = [{ ...PLAYER_VOID }, { ...PLAYER_VOID }];
+    players: [Player, Player] = [{ ...PLAYER_VOID }, { ...PLAYER_VOID }];
     id: number;
     socket: Socket;
     startingPlayer: 0 | 1 = 0;
     board: Board = ["", "", "", "", "", "", "", "", ""];
+    positionWinner?: PositionWinner;
 
     state: StateGame = "WAITING_PARTNER";
 
@@ -24,12 +26,11 @@ export class Room {
     }
 
     addPlayer(name: string) {
-        const indexPlayer = !this.player[0].name ? 0 : 1;
-        this.player[indexPlayer].name = name;
-        this.player[indexPlayer].lives = 3;
-        if (this.player[1].name) {
+        const indexPlayer = !this.players[0].name ? 0 : 1;
+        this.players[indexPlayer].name = name;
+        this.players[indexPlayer].lives = 3;
+        if (this.players[1].name) {
             this.state = this.startingPlayer === 0 ? "SHIFT_P1" : "SHIFT_P2";
-            this.startingPlayer = this.startingPlayer === 0 ? 1 : 0;
         }
         this.communicateRoom();
     }
@@ -37,10 +38,11 @@ export class Room {
     getRoom(): RoomBackend {
         return {
             publica: this.publica,
-            player: this.player,
+            player: this.players,
             id: this.id,
             state: this.state,
             board: this.board,
+            positionWinner: this.positionWinner,
         };
     }
     /**Comunica el estado actual a todos sus integrantes */
@@ -58,28 +60,32 @@ export class Room {
         )
             return;
         this.board[position] = playerNumber;
+        this.positionWinner = undefined;
 
         // Cambio de turno de los jugadores
         this.state = this.state === "SHIFT_P1" ? "SHIFT_P2" : "SHIFT_P1";
 
         // Verificacion de empate o de victoria
         const end = this.verificationVictory();
+        console.log("Verificando victoria", end);
         if (end === "DRAW") this.state = "DRAW";
         else if (typeof end === "object") {
             const indexAffectedPlayer = playerNumber === 1 ? 1 : 0;
-            this.player[indexAffectedPlayer].lives--;
-            if (this.player[indexAffectedPlayer].lives === 0) {
+            this.players[indexAffectedPlayer].lives--;
+            if (this.players[indexAffectedPlayer].lives === 0) {
                 this.state =
                     playerNumber === 1 ? "FINAL_VICTRY_P1" : "FINAL_VICTRY_P2";
+                this.positionWinner = end;
             } else {
                 this.state = playerNumber === 1 ? "WINNER_P1" : "WINNER_P2";
+                this.positionWinner = end;
             }
         }
         //Comunicacion de sala final
         this.communicateRoom();
     }
 
-    verificationVictory(): [number, number, number] | "DRAW" | undefined {
+    verificationVictory(): PositionWinner | "DRAW" | undefined {
         //Verificar las linea horizontales
         for (let i = 0; i < 3; i += 3) {
             if (
@@ -87,7 +93,7 @@ export class Room {
                 this.board[i] === this.board[i + 1] &&
                 this.board[i] === this.board[i + 2]
             ) {
-                return [i, i + 1, i + 2];
+                return [i as POSITION_BOARD, i + 1 as POSITION_BOARD, i + 2 as POSITION_BOARD];
             }
         }
 
@@ -98,7 +104,7 @@ export class Room {
                 this.board[i] === this.board[i + 3] &&
                 this.board[i] === this.board[i + 6]
             ) {
-                return [i, i + 3, i + 6];
+                return [i as POSITION_BOARD, i + 3 as POSITION_BOARD, i + 6 as POSITION_BOARD];
             }
         }
 
@@ -127,10 +133,11 @@ export class Room {
         console.log("Renovando la ronda");
         this.emptyBoard();
         this.changeInitialPlayer();
+        this.positionWinner = undefined
         this.state = this.startingPlayer === 0 ? "SHIFT_P1" : "SHIFT_P2";
-        if (this.player[0].lives === 0 || this.player[1].lives === 0) {
-            this.player[0].lives = 3;
-            this.player[1].lives = 3;
+        if (this.players[0].lives === 0 || this.players[1].lives === 0) {
+            this.players[0].lives = 3;
+            this.players[1].lives = 3;
         }
         this.communicateRoom();
     }

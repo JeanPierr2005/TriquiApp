@@ -1,5 +1,14 @@
-<p>{{userService.name()}}</p>
-
-<button (click)="searchPublicRoom()">Play Online</button>
-<a [routerLink]="['/private-play']">Create private room</a>
-<a [routerLink]="['/change-name']">Change Name</a>
+<section class="flex-column">
+  <h1 class="italic borde-animado">TRI-QUI <span>online</span></h1>
+  <p>
+    ¡Hola <span>{{ userService.name() }}</span
+    >!
+  </p>
+  <div class="flex-column">
+    <button (click)="searchPublicRoom()" class="boton">Play Online</button>
+    <a [routerLink]="['/private-play']" class="boton">Create private room</a>
+    <a [routerLink]="['/change-name']" class="boton" class="boton"
+      >Change Name</a
+    >
+  </div>
+</section>

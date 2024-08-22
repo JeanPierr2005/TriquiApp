@@ -1,15 +1,13 @@
-<div>
-  <button (click)="play(0)"[disabled]="!isMyShift()">{{roomService.board()[0]}}</button>
-  <button (click)="play(1)"[disabled]="!isMyShift()">{{roomService.board()[1]}}</button>
-  <button (click)="play(2)"[disabled]="!isMyShift()">{{roomService.board()[2]}}</button>
-</div>
-<div>
-  <button (click)="play(3)"[disabled]="!isMyShift()">{{roomService.board()[3]}}</button>
-  <button (click)="play(4)"[disabled]="!isMyShift()">{{roomService.board()[4]}}</button>
-  <button (click)="play(5)"[disabled]="!isMyShift()">{{roomService.board()[5]}}</button>
-</div>
-<div>
-  <button (click)="play(6)"[disabled]="!isMyShift()">{{roomService.board()[6]}}</button>
-  <button (click)="play(7)"[disabled]="!isMyShift()">{{roomService.board()[7]}}</button>
-  <button (click)="play(8)"[disabled]="!isMyShift()">{{roomService.board()[8]}}</button>
-</div>
+<section>
+    <button (click)="play(0)"[disabled]="!isMyShift() || roomService.board()[0]!==''"><span [ngClass]="{local: roomService.board()[0] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(0)}">{{getBrand(roomService.board()[0])}}</span></button>
+    <button (click)="play(1)"[disabled]="!isMyShift() || roomService.board()[1]!==''"><span [ngClass]="{local: roomService.board()[1] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(1)}">{{getBrand(roomService.board()[1])}}</span></button>
+    <button (click)="play(2)"[disabled]="!isMyShift() || roomService.board()[2]!==''"><span [ngClass]="{local: roomService.board()[2] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(2)}">{{getBrand(roomService.board()[2])}}</span></button>
+  
+    <button (click)="play(3)"[disabled]="!isMyShift() || roomService.board()[3]!==''"><span [ngClass]="{local: roomService.board()[3] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(3)}">{{getBrand(roomService.board()[3])}}</span></button>
+    <button (click)="play(4)"[disabled]="!isMyShift() || roomService.board()[4]!==''"><span [ngClass]="{local: roomService.board()[4] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(4)}">{{getBrand(roomService.board()[4])}}</span></button>
+    <button (click)="play(5)"[disabled]="!isMyShift() || roomService.board()[5]!==''"><span [ngClass]="{local: roomService.board()[5] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(5)}">{{getBrand(roomService.board()[5])}}</span></button>
+  
+    <button (click)="play(6)"[disabled]="!isMyShift() || roomService.board()[6]!==''"><span [ngClass]="{local: roomService.board()[6] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(6)}">{{getBrand(roomService.board()[6])}}</span></button>
+    <button (click)="play(7)"[disabled]="!isMyShift() || roomService.board()[7]!==''"><span [ngClass]="{local: roomService.board()[7] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(7)}">{{getBrand(roomService.board()[7])}}</span></button>
+    <button (click)="play(8)"[disabled]="!isMyShift() || roomService.board()[8]!==''"><span [ngClass]="{local: roomService.board()[8] === roomService.playerNumber(), winner:roomService.positionWinner()?.includes(8)}">{{getBrand(roomService.board()[8])}}</span></button>
+</section>
